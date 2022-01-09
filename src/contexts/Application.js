@@ -11,10 +11,12 @@ const UPDATE = 'UPDATE'
 const UPDATE_TIMEFRAME = 'UPDATE_TIMEFRAME'
 const UPDATE_SESSION_START = 'UPDATE_SESSION_START'
 const UPDATED_SUPPORTED_TOKENS = 'UPDATED_SUPPORTED_TOKENS'
+const UPDATED_TOKEN_URLS = 'UPDATED_TOKEN_URLS'
 const UPDATE_LATEST_BLOCK = 'UPDATE_LATEST_BLOCK'
 const UPDATE_HEAD_BLOCK = 'UPDATE_HEAD_BLOCK'
 
 const SUPPORTED_TOKENS = 'SUPPORTED_TOKENS'
+const TOKEN_URLS = 'TOKEN_URLS'
 const TIME_KEY = 'TIME_KEY'
 const CURRENCY = 'CURRENCY'
 const SESSION_START = 'SESSION_START'
@@ -75,6 +77,14 @@ function reducer(state, { type, payload }) {
       }
     }
 
+    case UPDATED_TOKEN_URLS: {
+      const { tokenURLs } = payload
+      return {
+        ...state,
+        [TOKEN_URLS]: tokenURLs,
+      }
+    }
+
     default: {
       throw Error(`Unexpected action type in DataContext reducer: '${type}'.`)
     }
@@ -126,6 +136,16 @@ export default function Provider({ children }) {
     })
   }, [])
 
+  
+  const updateTokenURLs = useCallback((tokenURLs) => {
+    dispatch({
+      type: UPDATED_TOKEN_URLS,
+      payload: {
+        tokenURLs,
+      },
+    })
+  }, [])
+
   const updateLatestBlock = useCallback((block) => {
     dispatch({
       type: UPDATE_LATEST_BLOCK,
@@ -154,11 +174,12 @@ export default function Provider({ children }) {
             updateSessionStart,
             updateTimeframe,
             updateSupportedTokens,
+            updateTokenURLs,
             updateLatestBlock,
             updateHeadBlock,
           },
         ],
-        [state, update, updateTimeframe, updateSessionStart, updateSupportedTokens, updateLatestBlock, updateHeadBlock]
+        [state, update, updateTimeframe, updateSessionStart, updateSupportedTokens, updateTokenURLs, updateLatestBlock, updateHeadBlock]
       )}
     >
       {children}
@@ -264,8 +285,9 @@ export function useSessionStart() {
 }
 
 export function useListedTokens() {
-  const [state, { updateSupportedTokens }] = useApplicationContext()
-  const supportedTokens = state?.[SUPPORTED_TOKENS]
+  const [state, { updateSupportedTokens, updateTokenURLs }] = useApplicationContext()
+  const listedTokens = state?.[SUPPORTED_TOKENS]
+  const tokenURLs = state?.[TOKEN_URLS]
 
   useEffect(() => {
     async function fetchList() {
@@ -275,12 +297,17 @@ export function useListedTokens() {
         return Promise.resolve([...tokensSoFar, ...newTokens.tokens])
       }, Promise.resolve([]))
       let formatted = allFetched?.map((t) => t.address.toLowerCase())
+      let urls = allFetched?.map((t)=>t.logoURI)
+      updateTokenURLs(urls)
       updateSupportedTokens(formatted)
     }
-    if (!supportedTokens) {
+    if(!listedTokens)  {
       fetchList()
     }
-  }, [updateSupportedTokens, supportedTokens])
+  }, [updateSupportedTokens, listedTokens, tokenURLs, updateTokenURLs])
 
-  return supportedTokens
+  return {listedTokens, tokenURLs}
 }
+
+
+

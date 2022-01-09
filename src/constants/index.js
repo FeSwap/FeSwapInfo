@@ -1,4 +1,4 @@
-export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+export const FACTORY_ADDRESS = '0x91289e8150E20Ff7CA8478dAd6DCC55D5c85Ac2D'
 
 export const BUNDLE_ID = '1'
 
@@ -13,8 +13,7 @@ export const timeframeOptions = {
 
 // token list urls to fetch tokens from - use for warnings on tokens and pairs
 export const SUPPORTED_LIST_URLS__NO_ENS = [
-  'https://gateway.ipfs.io/ipns/tokens.uniswap.org',
-  'https://www.coingecko.com/tokens_list/uniswap/defi_100/v_0_0_0.json',
+  'https://raw.githubusercontent.com/FeSwap/FeSwapTokenList/main/build/feswap-matic_token-list.json',
 ]
 
 // hide from overview list

@@ -192,8 +192,7 @@ function PairPage({ pairAddress, history }) {
   }, [])
 
   const [savedPairs, addPair] = useSavedPairs()
-
-  const listedTokens = useListedTokens()
+  const { listedTokens } = useListedTokens()
 
   if (PAIR_BLACKLIST.includes(pairAddress)) {
     return (
@@ -203,7 +202,7 @@ function PairPage({ pairAddress, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[pairAddress] ?? `This pair is not supported.`}
             </TYPE.light>
-            <Link external={true} href={'https://etherscan.io/address/' + pairAddress}>{`More about ${shortenAddress(
+            <Link external={true} href={'https://polygonscan.com/address/' + pairAddress}>{`More about ${shortenAddress(
               pairAddress
             )}`}</Link>
           </AutoColumn>
@@ -500,8 +499,8 @@ function PairPage({ pairAddress, history }) {
                     </AutoRow>
                   </Column>
                   <ButtonLight color={backgroundColor}>
-                    <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
-                      View on Etherscan ↗
+                    <Link color={backgroundColor} external href={'https://polygonscan.com/address/' + pairAddress}>
+                      View on PolygonScan ↗
                     </Link>
                   </ButtonLight>
                 </TokenDetailsLayout>

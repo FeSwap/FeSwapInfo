@@ -216,7 +216,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       }
       if (transactions.swaps.length > 0) {
         transactions.swaps.map((swap) => {
-          const netToken0 = swap.amount0In - swap.amount0Out
+          const netToken0 = swap.amount0In        // - swap.amount0Out
           const netToken1 = swap.amount1In - swap.amount1Out
 
           let newTxn = {}
@@ -304,7 +304,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         )}
         {!below1080 && (
           <DataText area="account">
-            <Link color={color} external href={'https://etherscan.io/address/' + item.account}>
+            <Link color={color} external href={'https://polygonscan.com/address/' + item.account}>
               {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
             </Link>
           </DataText>
