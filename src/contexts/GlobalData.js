@@ -302,9 +302,9 @@ async function getGlobalData(ethPrice, oldEthPrice) {
 
       // add relevant fields with the calculated amounts
       data.oneDayVolumeUSD = oneDayVolumeUSD
+      data.volumeChangeUSD = volumeChangeUSD
       data.oneWeekVolume = oneWeekVolume
       data.weeklyVolumeChange = weeklyVolumeChange
-      data.volumeChangeUSD = volumeChangeUSD
       data.liquidityChangeUSD = liquidityChangeUSD
       data.oneDayTxns = oneDayTxns
       data.txnChange = txnChange

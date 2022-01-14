@@ -68,7 +68,7 @@ const PairReturnsChart = ({ account, position }) => {
               Liquidity
             </OptionButton>
             <OptionButton active={chartView === CHART_VIEW.FEES} onClick={() => setChartView(CHART_VIEW.FEES)}>
-              Fees
+              Profits
             </OptionButton>
           </AutoRow>
           <AutoRow justify="flex-end" gap="6px">

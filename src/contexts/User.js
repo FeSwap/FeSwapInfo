@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect, useState } from 'react'
 import { useAllPairData, usePairData } from './PairData'
-import { client, stakingClient } from '../apollo/client'
+import { client } from '../apollo/client'
 import {
   USER_TRANSACTIONS,
   USER_POSITIONS,
@@ -495,7 +495,8 @@ export function useMiningPositions(account) {
     async function fetchData(account) {
       try {
         let miningPositionData = []
-        let result = await stakingClient.query({
+//        let result = await stakingClient.query({
+        let result = await client.query({
           query: MINING_POSITIONS(account),
           fetchPolicy: 'no-cache',
         })

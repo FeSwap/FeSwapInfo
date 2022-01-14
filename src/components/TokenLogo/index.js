@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import { isAddress } from '../../utils/index.js'
 import EthereumLogo from '../../assets/eth.png'
+import FeswLogo from '../../assets/Fesw.png'
 import { useListedTokens } from '../../contexts/Application'
 
 const BAD_IMAGES = {}
@@ -85,7 +86,20 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     )
   }
 
-
+  if (address?.toLowerCase() === '0x0be3afd0a28f0aa787d113c08d1d8a903cf6eee9') {
+    return (
+      <StyledEthereumLogo size={size} {...rest}>
+        <img
+          src={FeswLogo}
+          style={{
+            boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)',
+            borderRadius: '24px',
+          }}
+          alt="Fesw"
+        />
+      </StyledEthereumLogo>
+    )
+  }
 
   return (
     <Inline>

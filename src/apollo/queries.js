@@ -36,7 +36,7 @@ export const GET_BLOCK = gql`
 export const GET_BLOCKS = (timestamps) => {
   let queryString = 'query blocks {'
   queryString += timestamps.map((timestamp) => {
-    return `t${timestamp}:blocks(first: 1, orderBy: timestamp, orderDirection: desc, where: { timestamp_gt: ${timestamp}, timestamp_lt: ${
+    return `t${timestamp}:blocks(first: 1, orderBy: timestamp, orderDirection: asc, where: { timestamp_gt: ${timestamp}, timestamp_lt: ${
       timestamp + 600
     } }) {
       number
@@ -317,7 +317,7 @@ export const USER_TRANSACTIONS = gql`
       amount1
       amountUSD
     }
-    swaps(orderBy: timestamp, orderDirection: desc, where: { to: $user }) {
+    swaps(orderBy: timestamp, orderDirection: desc, where: { from: $user }) {
       id
       transaction {
         id
@@ -335,7 +335,7 @@ export const USER_TRANSACTIONS = gql`
       amount1In
       amount1Out
       amountUSD
-      to
+      from
     }
   }
 `
@@ -486,7 +486,7 @@ export const GLOBAL_TXNS = gql`
         amount1In
         amount1Out
         amountUSD
-        to
+        from
       }
     }
   }
@@ -617,6 +617,9 @@ const PairFields = `
     token0Price
     token1Price
     createdAtTimestamp
+    innerSwapCount
+    timestampFirstSwap
+    KValueAddedPerLiquidity
   }
 `
 
@@ -686,6 +689,7 @@ export const PAIRS_HISTORICAL_BULK = (block, pairs) => {
       trackedReserveETH
       volumeUSD
       untrackedVolumeUSD
+      KValueAddedPerLiquidity
     }
   }
   `
@@ -867,7 +871,7 @@ export const FILTERED_TRANSACTIONS = gql`
       amount1In
       amount1Out
       amountUSD
-      to
+      from
     }
   }
 `

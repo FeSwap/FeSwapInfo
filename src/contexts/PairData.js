@@ -288,6 +288,11 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
   data.trackedReserveUSD = data.trackedReserveETH * ethPrice
   data.liquidityChangeUSD = getPercentChange(data.reserveUSD, oneDayData?.reserveUSD)
 
+  data.dailyKValueAdded =  parseFloat(data.KValueAddedPerLiquidity)
+  if (oneDayData) {
+    data.dailyKValueAdded = data.dailyKValueAdded - parseFloat(oneDayData.KValueAddedPerLiquidity)
+  }
+
   // format if pair hasnt existed for a day or a week
   if (!oneDayData && data && data.createdAtBlockNumber > oneDayBlock) {
     data.oneDayVolumeUSD = parseFloat(data.volumeUSD)

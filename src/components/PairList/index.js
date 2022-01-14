@@ -69,12 +69,12 @@ const DashGrid = styled.div`
   @media screen and (min-width: 1080px) {
     padding: 0 1.125rem;
     grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: ' name liq vol volWeek fees apy';
+    grid-template-areas: ' name liq vol volWeek profits apy';
   }
 
   @media screen and (min-width: 1200px) {
     grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: ' name liq vol volWeek fees apy';
+    grid-template-areas: ' name liq vol volWeek profits apy';
   }
 `
 
@@ -182,20 +182,24 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         true
       )
 
-      const apy = formattedPercent(
-        ((pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD : pairData.oneDayVolumeUntracked) * 0.003 * 365 * 100) /
-          (pairData.oneDayVolumeUSD ? pairData.trackedReserveUSD : pairData.reserveUSD)
-      )
+//      const apy = formattedPercent(
+//        ((pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD : pairData.oneDayVolumeUntracked) * 0.003 * 365 * 100) /
+//          (pairData.oneDayVolumeUSD ? pairData.trackedReserveUSD : pairData.reserveUSD)
+//      )
+
+      const apy = formattedPercent(pairData.dailyKValueAdded * 365 * 100)
 
       const weekVolume = formattedNum(
         pairData.oneWeekVolumeUSD ? pairData.oneWeekVolumeUSD : pairData.oneWeekVolumeUntracked,
         true
       )
 
-      const fees = formattedNum(
-        pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD * 0.003 : pairData.oneDayVolumeUntracked * 0.003,
-        true
-      )
+//      const fees = formattedNum(
+//        pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD * 0.003 : pairData.oneDayVolumeUntracked * 0.003,
+//        true
+//      )
+
+      const fees = formattedNum( pairData.dailyKValueAdded * pairData.reserveUSD, true )
 
       return (
         <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
@@ -219,7 +223,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
           <DataText area="liq">{formatDataText(liquidity, pairData.trackedReserveUSD)}</DataText>
           <DataText area="vol">{formatDataText(volume, pairData.oneDayVolumeUSD)}</DataText>
           {!below1080 && <DataText area="volWeek">{formatDataText(weekVolume, pairData.oneWeekVolumeUSD)}</DataText>}
-          {!below1080 && <DataText area="fees">{formatDataText(fees, pairData.oneDayVolumeUSD)}</DataText>}
+          {!below1080 && <DataText area="fees">{formatDataText(fees, pairData.oneDayVolumeUSD, true)}</DataText>}
           {!below1080 && (
             <DataText area="apy">
               {formatDataText(apy, pairData.oneDayVolumeUSD, pairData.oneDayVolumeUSD === 0)}
@@ -242,10 +246,16 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         const pairA = pairs[addressA]
         const pairB = pairs[addressB]
         if (sortedColumn === SORT_FIELD.APY) {
-          const apy0 = parseFloat(pairA.oneDayVolumeUSD * 0.003 * 356 * 100) / parseFloat(pairA.reserveUSD)
-          const apy1 = parseFloat(pairB.oneDayVolumeUSD * 0.003 * 356 * 100) / parseFloat(pairB.reserveUSD)
-          return apy0 > apy1 ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+//          const apy0 = parseFloat(pairA.oneDayVolumeUSD * 0.003 * 365 * 100) / parseFloat(pairA.reserveUSD)
+//          const apy1 = parseFloat(pairB.oneDayVolumeUSD * 0.003 * 365 * 100) / parseFloat(pairB.reserveUSD)
+//          return apy0 > apy1 ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+            return pairA.dailyKValueAdded > pairB.dailyKValueAdded ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
         }
+        if (sortedColumn === SORT_FIELD.FEES) {
+          const fee0 = pairA.dailyKValueAdded * pairA.reserveUSD
+          const fee1 = pairB.dailyKValueAdded * pairB.reserveUSD
+          return fee0 > fee1 ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+        }        
         return parseFloat(pairA[FIELD_TO_VALUE(sortedColumn, useTracked)]) >
           parseFloat(pairB[FIELD_TO_VALUE(sortedColumn, useTracked)])
           ? (sortDirection ? -1 : 1) * 1
@@ -312,13 +322,13 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         {!below1080 && (
           <Flex alignItems="center" justifyContent="flexEnd">
             <ClickableText
-              area="fees"
+              area="profits"
               onClick={(e) => {
                 setSortedColumn(SORT_FIELD.FEES)
                 setSortDirection(sortedColumn !== SORT_FIELD.FEES ? true : !sortDirection)
               }}
             >
-              Fees (24hr) {sortedColumn === SORT_FIELD.FEES ? (!sortDirection ? '↑' : '↓') : ''}
+              Profits (24hr) {sortedColumn === SORT_FIELD.FEES ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
         )}
@@ -331,7 +341,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
                 setSortDirection(sortedColumn !== SORT_FIELD.APY ? true : !sortDirection)
               }}
             >
-              1y Fees / Liquidity {sortedColumn === SORT_FIELD.APY ? (!sortDirection ? '↑' : '↓') : ''}
+              1y Profits / Liquidity {sortedColumn === SORT_FIELD.APY ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
             <QuestionHelper text={'Based on 24hr volume annualized'} />
           </Flex>

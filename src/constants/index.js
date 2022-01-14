@@ -35,10 +35,6 @@ export const TOKEN_BLACKLIST = [
 
 // pair blacklist
 export const PAIR_BLACKLIST = [
-  '0xb6a741f37d6e455ebcc9f17e2c16d0586c3f57a5',
-  '0x97cb8cbe91227ba87fc21aaf52c4212d245da3f8',
-  '0x1acba73121d5f63d8ea40bdc64edb594bd88ed09',
-  '0x7d7e813082ef6c143277c71786e5be626ec77b20',
 ]
 
 // warnings to display if page contains info about blocked token
@@ -56,10 +52,10 @@ export const UNTRACKED_COPY = 'Derived USD values may be inaccurate without liqu
 
 // tokens that should be tracked but arent due to lag in subgraph
 export const TRACKED_OVERRIDES = [
-  '0x9928e4046d7c6513326ccea028cd3e7a91c7590a',
-  '0x87da823b6fc8eb8575a235a824690fda94674c88',
-  '0xcd7989894bc033581532d2cd88da5db0a4b12859',
-  '0xe1573b9d29e2183b1af0e743dc2754979a40d237',
-  '0x45804880de22913dafe09f4980848ece6ecbaf78',
-  '0x709f7b10f22eb62b05913b59b92ddd372d4e2152',
+//  '0x9928e4046d7c6513326ccea028cd3e7a91c7590a',
+//  '0x87da823b6fc8eb8575a235a824690fda94674c88',
+//  '0xcd7989894bc033581532d2cd88da5db0a4b12859',
+//  '0xe1573b9d29e2183b1af0e743dc2754979a40d237',
+//  '0x45804880de22913dafe09f4980848ece6ecbaf78',
+//  '0x709f7b10f22eb62b05913b59b92ddd372d4e2152',
 ]

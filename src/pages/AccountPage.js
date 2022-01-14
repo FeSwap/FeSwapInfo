@@ -280,7 +280,7 @@ function AccountPage({ account }) {
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body>Fees Earned (Cumulative)</TYPE.body>
+                    <TYPE.body>Profits Earned (Cumulative)</TYPE.body>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
@@ -358,7 +358,7 @@ function AccountPage({ account }) {
                 <TYPE.header fontSize={24}>
                   {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
                 </TYPE.header>
-                <TYPE.main>Total Fees Paid</TYPE.main>
+                <TYPE.main>Total Fees Saved</TYPE.main>
               </AutoColumn>
               <AutoColumn gap="8px">
                 <TYPE.header fontSize={24}>{transactionCount ? transactionCount : '-'}</TYPE.header>
