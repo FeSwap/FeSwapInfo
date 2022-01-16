@@ -51,6 +51,7 @@ export default async function getTokenList(listUrl: string): Promise<TokenList> 
     }
 
     const json = await response.json()
+//  some token names may be longer than 20 letters    
 //    if (!tokenListValidator(json)) {
 //      const validationErrors: string =
 //        tokenListValidator.errors?.reduce<string>((memo, error) => {

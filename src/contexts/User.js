@@ -495,18 +495,20 @@ export function useMiningPositions(account) {
     async function fetchData(account) {
       try {
         let miningPositionData = []
-//        let result = await stakingClient.query({
         let result = await client.query({
           query: MINING_POSITIONS(account),
           fetchPolicy: 'no-cache',
         })
-        if (!result?.data?.user?.miningPosition) {
+        if (!result?.data?.user?.miningPositions) {
           return
         }
-        miningPositionData = result.data.user.miningPosition
+        miningPositionData = result.data.user.miningPositions
+
         for (const miningPosition of miningPositionData) {
-          const pairAddress = miningPosition.miningPool.pair.id
-          miningPosition.pairData = allPairData[pairAddress]
+          const pairAddress0 = miningPosition.miningPool.pair0.id
+          miningPosition.pairData0 = allPairData[pairAddress0]
+          const pairAddress1 = miningPosition.miningPool.pair1.id
+          miningPosition.pairData1 = allPairData[pairAddress1]
         }
         updateMiningPositions(account, miningPositionData)
       } catch (e) {

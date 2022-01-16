@@ -646,19 +646,25 @@ export const MINING_POSITIONS = (account) => {
   const queryString = `
     query users {
       user(id: "${account}") {
-        miningPosition {
+        miningPositions {
           id
           user {
             id
           }
           miningPool {
-              pair {
+              pair0 {
+                id
+                token0
+                token1
+              }
+              pair1 {
                 id
                 token0
                 token1
               }
           }
-          balance
+          balance0          
+          balance1        
         }
       }
     }

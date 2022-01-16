@@ -67,16 +67,25 @@ export function getSwapLink(token0Address, token1Address = null) {
 }
 
 export function getMiningPoolLink(token0Address) {
-  return `https://app.feswap.io/#/uni/ETH/${token0Address}`
+  return `https://app.feswap.io/#/fesw/ETH/${token0Address}`
 }
 
-export function getUniswapAppLink(linkVariable) {
-  let baseUniswapUrl = 'https://app.feswap.io/#/fesw'
-  if (!linkVariable) {
-    return baseUniswapUrl
+export function getFeSwapAppLink(linkVariable0, linkVariable1) {
+  let baseFeSwapUrl = 'https://app.feswap.io/#/fesw'
+  let token0, token1
+
+  if (!linkVariable0) {
+    return baseFeSwapUrl
+  } else {
+    token0 = linkVariable0 === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270' ? 'ETH' : linkVariable0
   }
 
-  return `${baseUniswapUrl}/ETH/${linkVariable}`
+  if (!linkVariable1) {
+    return `${baseFeSwapUrl}/ETH/${token0}`
+  } 
+  token1 = linkVariable1 === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270' ? 'ETH' : linkVariable1
+    return token1 === 'ETH' ? `${baseFeSwapUrl}/ETH/${token0}`
+                          : `${baseFeSwapUrl}/${token0}/${token1}`
 }
 
 export function localNumber(val) {

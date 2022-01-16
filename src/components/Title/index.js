@@ -57,7 +57,7 @@ export default function Title() {
             <img width={'28px'} src={Logo} alt="logo" />
           </UniIcon>
           {!below1080 && (
-            <TYPE.largeHeader color={'white'} style={{ marginLeft: '10px', marginTop: '-8px', fontFamily: 'Georgia' }} > 
+            <TYPE.largeHeader color={'white'} style={{ fontSize: 28, marginLeft: '10px', marginTop: '-8px', fontFamily: 'Georgia' }} > 
                 FeSwap </TYPE.largeHeader>
           )}
         </RowFixed>
