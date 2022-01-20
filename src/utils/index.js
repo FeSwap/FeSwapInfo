@@ -377,8 +377,8 @@ export const formattedNum = (number, usd = false, acceptNegatives = false) => {
     return 0
   }
 
-  if (num < 0.0001 && num > 0) {
-    return usd ? '< $0.0001' : '< 0.0001'
+  if (num < 0.00001 && num > 0) {
+    return usd ? '< $0.00001' : '< 0.00001'
   }
 
   if (num > 1000) {
@@ -387,13 +387,13 @@ export const formattedNum = (number, usd = false, acceptNegatives = false) => {
 
   if (usd) {
     if (num < 0.1) {
-      return formatDollarAmount(num, 4)
+      return formatDollarAmount(num, 5)
     } else {
       return formatDollarAmount(num, 2)
     }
   }
 
-  return Number(parseFloat(num).toFixed(4)).toString()
+  return Number(parseFloat(num).toFixed(5)).toString()
 }
 
 export function rawPercent(percentRaw) {
