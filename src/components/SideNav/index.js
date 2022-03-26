@@ -164,6 +164,11 @@ function SideNav({ history }) {
           </AutoColumn>
           <AutoColumn gap="0.5rem" style={{ marginLeft: '.75rem', marginBottom: '4rem' }}>
             <HeaderText>
+              <Link href="https://app.feswap.io" target="_blank">
+                FeSwap DApp
+              </Link>
+            </HeaderText>
+            <HeaderText>
               <Link href="https://feswap.io" target="_blank">
                 FeSwap.io
               </Link>
